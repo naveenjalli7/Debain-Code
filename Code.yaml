@@ -5,6 +5,17 @@
   tasks:
     - name: Copy SentinelOne Agent .deb file to servers
       copy:
-        src: /home/njalli/Downloads/SentinelAgent_linux_x86_64_v24_1_2_6.deb
-        dest: /tmp/SentinelAgent_linux_x86_64_v24_1_2_6.deb
+        src: /home/njalli/Downloads/SentinelAgent_linux_x86_64_v24_1_2_6.deb.zip
+        dest: /tmp/SentinelAgent_linux_x86_64_v24_1_2_6.deb.zip
       mode: '0644'
+
+    - name: Unzip SentinelOne Agent package
+      unarchive:
+        src: /tmp/SentinelAgent_linux_x86_64_v24_1_2_6.deb.zip
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Install SentinelOne Agent package
+      apt:
+        deb: /tmp/SentinelAgent_linux_x86_64_v24_1_2_6.deb
+        state: present
